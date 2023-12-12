@@ -1,7 +1,7 @@
-package com.raven.component;
+package login.component;
 
 import com.raven.model.ModelUser;
-import connection.DatabaseConnection;
+import utils.MySQLConnect;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -278,7 +278,7 @@ public class PanelLoading extends javax.swing.JLayeredPane {
             repaint();
             try {
                 String sql = "update `user` set `Profile`=? where UserID=? limit 1";
-                PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+                PreparedStatement p = MySQLConnect.getInstance().getConnection().prepareStatement(sql);
                 p.setBinaryStream(1, Files.newInputStream(file.toPath()));
                 p.setInt(2, data.getUserID());
                 p.execute();

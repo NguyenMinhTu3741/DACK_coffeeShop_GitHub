@@ -16,7 +16,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        slide = new com.raven.component.PanelSlide();
+        slide = new login.component.PanelSlide();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -77,6 +77,6 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.component.PanelSlide slide;
+    private login.component.PanelSlide slide;
     // End of variables declaration//GEN-END:variables
 }
