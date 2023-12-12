@@ -1,8 +1,8 @@
-package com.raven.component;
+package login.component;
 
-import com.raven.main.Main;
+import login.main.Main;
 import com.raven.model.ModelUser;
-import connection.DatabaseConnection;
+import utils.MySQLConnect;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -127,7 +127,7 @@ public class PanelSlide extends javax.swing.JLayeredPane {
                 try {
                     Thread.sleep(2000);
                     String sql = "select UserID, UserName, `Profile` from `user` where BINARY(UserName)=? and BINARY(`Password`)=? limit 1";
-                    PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
+                    PreparedStatement p = MySQLConnect.getInstance().getConnection().prepareStatement(sql);
                     p.setString(1, userName);
                     p.setString(2, password);
                     ResultSet r = p.executeQuery();
