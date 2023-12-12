@@ -8,15 +8,22 @@ public class MySQLConnect {
     private static final String userName = "root";
     private static final String password = "minhtu150320";
 
+    public static MySQLConnect instance;
+
+    public static MySQLConnect getInstance() {
+        if (instance == null) {
+            instance = new MySQLConnect();
+        }
+        return instance;
+    }
+
+    private MySQLConnect() {
+    }
+
     private static Connection connection;
 
-    public static Connection getConn(){
-        if(connection == null){
-            connection = getConnection();
-        }
-        return connection;
-    }
-    public static Connection getConnection(){
+
+    public Connection getConnection() throws SQLException{
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(dbURL, userName, password);
