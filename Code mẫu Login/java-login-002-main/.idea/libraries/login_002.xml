@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="login-002">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/login-002/mysql-connector-java-5.1.23-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/login-002/TimingFramework-0.55.jar!/" />
+      <root url="jar://$PROJECT_DIR$/login-002/miglayout-4.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
