@@ -3,33 +3,38 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
-import java.awt.Toolkit;
-import javax.swing.*;
+// lombok
+import entity.UserAccount;
+import entity.ChucVu;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+// import file
 import utils.MySQLConnect;
+import controller.LoginController;
+import controller.MainController;
+// sql librabry
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
-import entity.UserAccount;
+// other librabry
+import java.awt.Toolkit;
+import javax.swing.*;
+
+
 
 /**
  *
  * @author nguyentu
  */
 public class FrLogin extends javax.swing.JFrame {
-    public String userName;
-    public String passWord;
-    
-    UserAccount user = new UserAccount('A001', 'CV001', 'user1', 'password1', 'Nguyễn Văn A', 'Hà Nội', 'user1@example.com');
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
+    public UserAccount user;
+    public LoginController loginController;
+    public MainController mainController;
+    public ChucVu chucVu;
+    public FrMain frMain;
     /**
      * Creates new form login
      */
@@ -62,8 +67,10 @@ public class FrLogin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Login to system");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel2.setText("Username:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel3.setText("Password:");
 
         txtUserName.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +82,7 @@ public class FrLogin extends javax.swing.JFrame {
         jSeparator2.setAlignmentX(10.0F);
 
         btnOk.setBackground(new java.awt.Color(102, 153, 255));
+        btnOk.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnOk.setForeground(new java.awt.Color(255, 255, 255));
         btnOk.setText("OK");
         btnOk.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -89,6 +97,7 @@ public class FrLogin extends javax.swing.JFrame {
         });
 
         btnCancel.setBackground(new java.awt.Color(102, 153, 255));
+        btnCancel.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancel");
         btnCancel.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -164,100 +173,36 @@ public class FrLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
-        //setUserName(txtUserName.getText());
-        userName = new String(txtUserName.getText());
-        passWord = new String(txtPassword.getPassword());
-        String chucVu = null;
-        StringBuilder sb = new StringBuilder();
-        boolean checkBothEmpty = false;
-        boolean checkOneEmpty = false;
-        if(userName.equals("") && passWord.equals("")){
-            checkBothEmpty = true;
-        }
-        if(userName.equals("") && checkBothEmpty == false){
-            checkOneEmpty = true;
-         sb.append("Tài khoản không được bỏ trống"); 
-         
-        }
-        if(passWord.equals("") && checkBothEmpty == false){
-            checkOneEmpty = true;
-            sb.append("Mật khẩu không được bỏ trống");
-        }
-        if (checkBothEmpty == true)
-        {
-            JOptionPane.showMessageDialog(this,"Tài khoản và mật khẩu không được bỏ trống", "Authentication",JOptionPane.ERROR_MESSAGE);
-        }
-        if(sb.length() > 0){
-            JOptionPane.showMessageDialog(this,sb.toString(), "Authentication",JOptionPane.ERROR_MESSAGE);
-        }
-        boolean isValid = checkCredentials(userName, passWord);
-        if (isValid){
-            sb.append(userName);
-            JOptionPane.showMessageDialog(this, "Xin chào " + sb.toString(), "Success", JOptionPane.INFORMATION_MESSAGE);
-             FrMain frmain = new FrMain();
-             frmain.setFrLogin(this);
-             frmain.runMain();
-             setVisible(false);
+        // get userName and passWord
+        user = new UserAccount();
+        user.setUserName(txtUserName.getText());
+        user.setPassWord(new String(txtPassword.getPassword()));
+        // check empty
+        loginController = new LoginController(user);
+        loginController.checkEmpty(user, this);
+        loginController.getChucVu(user);
+        // check exists
+        boolean checkValid = loginController.checkCredentials(user);
+        if(checkValid){
+            user.setFullName(loginController.getFullName(user));
+            JOptionPane.showMessageDialog(this, "Xin chào " + user.getFullName(),"Success", JOptionPane.INFORMATION_MESSAGE);
+            mainController = new MainController(loginController);
+            frMain = new FrMain();
+            frMain.setMainController(mainController);
+            frMain.runMain();
+            setVisible(false);
         }
         else{
-               if(checkBothEmpty == false && checkOneEmpty == false){
-                 JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu sai", "Authentication", JOptionPane.ERROR_MESSAGE);
-               }               
-            }            
-    }//GEN-LAST:event_btnOkActionPerformed
-    public String getChucVu(String userName){
-        String chucVu = null;
-    try{
-        Connection connection = MySQLConnect.getConnection();
-        String query = "SELECT ChucVu.tenChucVu FROM UserAccount "
-                + "JOIN ChucVu ON UserAccount.idChucVu = ChucVu.idChucVu WHERE userName = ?";
-        try(PreparedStatement statement = connection.prepareStatement(query) ){
-            statement.setString(1,userName);
-            try{
-                ResultSet rs = statement.executeQuery();
-                if(rs.next()){
-                    chucVu = rs.getString("tenChucVu");
-                }
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-    }
-
-    }catch(SQLException e){
-         e.printStackTrace();
-    }
-     return chucVu;   
-}
-    
-    private  boolean checkCredentials(String userName, String passWord){
-        String chucVu = null;
-        boolean isValid = false;
-        try{
-            Connection connection = MySQLConnect.getConnection();
-            String query = "SELECT COUNT(*) FROM UserAccount WHERE userName = ? AND passWord = ?";
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, userName);
-                statement.setString(2, passWord);
-                try(ResultSet rs = statement.executeQuery()){
-                    if(rs.next()){
-                        int count = rs.getInt(1);
-                        isValid = (count > 0);
-                    }
-                }
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-            
+            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu sai", "Authentication", JOptionPane.ERROR_MESSAGE);
         }
-        return isValid;
-    }
-            
+    }//GEN-LAST:event_btnOkActionPerformed
+       
     private void btnCancelAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_btnCancelAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelAncestorAdded
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
+           System.exit(0);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserNameActionPerformed

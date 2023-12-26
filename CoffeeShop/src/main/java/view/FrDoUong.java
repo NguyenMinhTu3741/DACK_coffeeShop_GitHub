@@ -3,18 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
+// lombok
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+// import file
+import utils.MySQLConnect;
+import entity.DoUong;
+import controller.MainController;
+import controller.DoUongController;
+import controller.LoginController;
+// sql librabry
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+// other librabry
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import utils.MySQLConnect;
+import javax.swing.JTextField;
+
 
 /**
  *
@@ -24,13 +37,30 @@ public class FrDoUong extends javax.swing.JFrame {
     /**
      * Creates new form FrDoUong
      */
-    FrDoUong frdouong;
-    FrMain frmain;
-    public FrDoUong() {        
+    public FrDoUong frDoUong;
+    public FrMain frMain;
+    public DoUongController doUongController;
+    public DoUong doUong;
+    public FrSuaDoUong frSuaDoUong;
+    public MainController mainController;
+
+   
+    public FrDoUong(){
         setTitle("Danh sách đồ uống");
         initComponents();
     }
+    
+    public MainController getMainController() {
+        return mainController;
+    }
 
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,12 +78,12 @@ public class FrDoUong extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtTenThucUong = new javax.swing.JTextField();
+        txtTenDoUong = new javax.swing.JTextField();
         txtGiaBan = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
-        txtIDThucUong = new javax.swing.JTextField();
+        txtIDDoUong = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -100,16 +130,16 @@ public class FrDoUong extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thêm đồ uống", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel2.setText("ID thức uống");
+        jLabel2.setText("ID đồ uống");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel3.setText("Tên thức uống");
+        jLabel3.setText("Tên đồ uống");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("Giá bán");
 
         btnThem.setBackground(new java.awt.Color(102, 153, 255));
-        btnThem.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        btnThem.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -119,7 +149,7 @@ public class FrDoUong extends javax.swing.JFrame {
         });
 
         btnSua.setBackground(new java.awt.Color(102, 153, 255));
-        btnSua.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        btnSua.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnSua.setForeground(new java.awt.Color(255, 255, 255));
         btnSua.setText("Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +159,7 @@ public class FrDoUong extends javax.swing.JFrame {
         });
 
         btnXoa.setBackground(new java.awt.Color(102, 153, 255));
-        btnXoa.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        btnXoa.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
         btnXoa.setText("Xoá");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
@@ -148,7 +178,7 @@ public class FrDoUong extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(15, 15, 15)
-                        .addComponent(txtIDThucUong))
+                        .addComponent(txtIDDoUong))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -157,12 +187,12 @@ public class FrDoUong extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
+                                .addGap(46, 46, 46)
                                 .addComponent(btnSua)
-                                .addGap(51, 51, 51)
+                                .addGap(45, 45, 45)
                                 .addComponent(btnXoa)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtTenThucUong, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtTenDoUong, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtGiaBan))))
                 .addContainerGap())
         );
@@ -172,11 +202,11 @@ public class FrDoUong extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtIDThucUong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIDDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtTenThucUong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTenDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -230,58 +260,56 @@ public class FrDoUong extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        String ID = new String(txtIDThucUong.getText());
-        String tenThucUong = new String(txtTenThucUong.getText());
-        Double price = Double.valueOf(txtGiaBan.getText());
-        if((checkDuplicateID(ID))){
-            JOptionPane.showMessageDialog(this, "ID bị trùng xin vui lòng nhập lại ", "Invalidation", JOptionPane.ERROR_MESSAGE);  
+        doUong = new DoUong();
+        doUongController = new DoUongController();
+        if(!check_empty()){
+            doUong.setIdDoUong(new String(txtIDDoUong.getText()));
+            doUong.setTenDoUong(new String(txtTenDoUong.getText()));
+            doUong.setPrice(Double.valueOf(txtGiaBan.getText()));
+            doUongController.themDoUong(frDoUong);
+            doUongController.create(doUong);
+            txtGiaBan.setText("");
+            txtIDDoUong.setText("");
+            txtTenDoUong.setText("");  
         }
         else{
-            try{
-                Connection connection = MySQLConnect.getConnection();
-                String query = "INSERT INTO Food (idFood, foodName, price) VALUES(?,?,?)";
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setString(1,ID);
-                statement.setString(2,tenThucUong);
-                statement.setDouble(3,price);
-                statement.executeUpdate();
-                JOptionPane.showMessageDialog(this, "Nhập thành công", "Success", JOptionPane.INFORMATION_MESSAGE);  
+            JOptionPane.showMessageDialog(this, "Không được để trống", "Invalidation", JOptionPane.ERROR_MESSAGE);           
+        }
 
-            }catch(SQLException e){
-                e.printStackTrace();
-            } 
-        }
+        
     }//GEN-LAST:event_btnThemActionPerformed
-    public boolean checkDuplicateID(String id){
-        boolean check = false;
-        try{
-            Connection connection = MySQLConnect.getConnection();
-            String query = "SELECT * FROM FOOD";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-            while(rs.next()){
-                String id_temp = rs.getString("idFood");
-                if(id.equals(id_temp)){
-                    check = true;
-                    break;
-                }
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
+
+    public boolean check_empty(){
+        Boolean check = false;
+        String id = txtIDDoUong.getText();
+        String name = txtTenDoUong.getText();
+        String temp = txtGiaBan.getText();
+        if(id.isEmpty()|| name.isEmpty() || temp.isEmpty()){
+            return true;
         }
-           return check;
-        }
+        return check;
+    } 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
+        frSuaDoUong = new FrSuaDoUong();
+        frSuaDoUong.runMain();
+        setVisible(false);
+        
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
+        FrXoaDoUong frXoaDoUong = new FrXoaDoUong();
+        frXoaDoUong.runMain();
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnTrangChuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrangChuActionPerformed
-        // frmain = new FrMain();
-        frmain.runMain();
+        FrMain frMain = new FrMain();
+        frMain.setMainController(mainController);
+        frMain.runMain();
+        if(mainController == null){
+            System.out.println("Null cmnrrrr");
+        }
         setVisible(false);
         dispose(); 
     }//GEN-LAST:event_btnTrangChuActionPerformed
@@ -297,13 +325,13 @@ public class FrDoUong extends javax.swing.JFrame {
             public void run(){
                 try{    
                     Connection connection = MySQLConnect.getConnection();
-                    String query = "SELECT * FROM Food";
+                    String query = "SELECT * FROM DoUong";
                     Statement statement = connection.createStatement();
                     ResultSet rs = statement.executeQuery(query);
                     model.setRowCount(0);
                     while(rs.next()){
-                        String id = rs.getString("idFood");
-                        String name = rs.getString("foodName");
+                        String id = rs.getString("idDoUong");
+                        String name = rs.getString("tenDoUong");
                         double price = rs.getDouble("price");
                         model.addRow(new Object[]{id, name, price});
                     }
@@ -313,7 +341,7 @@ public class FrDoUong extends javax.swing.JFrame {
             }
         };
     Timer timer = new Timer();
-    timer.scheduleAtFixedRate(updateTask, 0, 5000);
+    timer.scheduleAtFixedRate(updateTask, 0, 1000);
     }//GEN-LAST:event_tbDoUongAncestorAdded
     /**
      * @param args the command line arguments
@@ -345,16 +373,16 @@ public class FrDoUong extends javax.swing.JFrame {
         /* Create and display the form */
     }
     public void runMain(){
-        FrDoUong frdouong = new FrDoUong();        
+       // FrDoUong frDoUong = new FrDoUong();
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-        int x = (screenWidth - frdouong.getWidth()) / 2;
-        int y = (screenHeight - frdouong.getHeight()) / 2;
+        int x = (screenWidth - getWidth()) / 2;
+        int y = (screenHeight - getHeight()) / 2;
         java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
-        frdouong.setVisible(true);
-        frdouong.setLocation(x, y);
-        frdouong.setResizable(false);
+        setVisible(true);
+        setLocation(x, y);
+        setResizable(false);
         }
 });
 }
@@ -371,7 +399,7 @@ public class FrDoUong extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbDoUong;
     private javax.swing.JTextField txtGiaBan;
-    private javax.swing.JTextField txtIDThucUong;
-    private javax.swing.JTextField txtTenThucUong;
+    private javax.swing.JTextField txtIDDoUong;
+    private javax.swing.JTextField txtTenDoUong;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,0 +1,172 @@
+package controller;
+// improt SQL Librabry
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
+// import file
+import utils.MySQLConnect;
+import entity.DoUong;
+import view.*;
+import controller.MainController;
+// import other 
+import javax.swing.JOptionPane;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+
+/**
+ *
+ * @author nguyentu
+ */
+public class DoUongController{
+    // public DoUong doUong; 
+    public FrDoUong frDoUong;
+    public FrSuaDoUong frSuaDoUong;
+    public DoUong doUong;
+    public FrXoaDoUong frXoaDoUong;
+    public MainController mainController;
+    
+    public DoUongController(MainController mainController) {
+        this.mainController = mainController;
+    }
+    public DoUongController(FrDoUong frDoUong) {
+        this.frDoUong = frDoUong;
+    }
+    
+    public DoUongController(){
+        
+    }
+    
+    public DoUong getDoUong() {
+        return doUong;
+    }
+
+    public void setDoUong(DoUong doUong) {
+        this.doUong = doUong;
+    }
+
+    
+    public void themDoUong(FrDoUong frDoUong){
+        this.frDoUong = frDoUong;
+        
+    }
+    
+    public void suaDoUong(FrSuaDoUong frSuaDoUong){
+        this.frSuaDoUong = frSuaDoUong;
+    }
+    
+    public void xoaDoUong(FrXoaDoUong frXoaDoUong){
+        this.frXoaDoUong = frXoaDoUong;
+    }
+    
+    public void create(Object object) {
+        DoUong doUong = new DoUong();
+        doUong = (DoUong) object;
+        if((checkDuplicateID(doUong.idDoUong))){
+            JOptionPane.showMessageDialog(frDoUong, "ID bị trùng xin vui lòng nhập lại ", "Invalidation", JOptionPane.ERROR_MESSAGE);  
+        }
+        else{
+            try{
+                Connection connection = MySQLConnect.getConnection();
+                String query = "INSERT INTO DoUong (idDoUong, tenDoUong, price) VALUES(?,?,?)";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1,doUong.idDoUong);
+                statement.setString(2,doUong.tenDoUong);
+                statement.setDouble(3,doUong.price);
+                statement.executeUpdate();
+                JOptionPane.showMessageDialog(frDoUong, "Nhập thành công", "Success", JOptionPane.INFORMATION_MESSAGE);           
+            }catch(SQLException e){
+                e.printStackTrace();
+            } 
+        }
+
+    }
+  
+    public boolean checkDuplicateID(String id){
+    boolean check = false;
+    try{
+        Connection connection = MySQLConnect.getConnection();
+        String query = "SELECT * FROM DoUong";
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet rs = statement.executeQuery();
+        while(rs.next()){
+            String id_temp = rs.getString("idDoUong");
+            if(id.equals(id_temp)){
+                check = true;
+                break;
+            }
+        }
+    }catch(SQLException e){
+        e.printStackTrace();
+    }
+       return check;
+}
+
+    public void update(Object object) {
+        DoUong doUong = new DoUong();
+        doUong = (DoUong) object;
+        // this.doUong = (DoUong) object;
+        if(find(doUong.getIdDoUong())){
+            try{
+            Connection connection = MySQLConnect.getConnection();
+            String query = "UPDATE DoUong SET tenDoUong = ?, price = ? WHERE idDoUong = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,doUong.tenDoUong);
+            statement.setDouble(2,doUong.price);
+            statement.setString(3,doUong.idDoUong);
+            statement.executeUpdate();
+            JOptionPane.showMessageDialog(frSuaDoUong, "Nhập thành công", "Success", JOptionPane.INFORMATION_MESSAGE);           
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(frSuaDoUong, "Nhập thất bại, ID không tồn tại", "Invalidation", JOptionPane.ERROR_MESSAGE);           
+            
+        }
+}
+    public void delete(String idDoUong) {
+        Boolean check_delete = false;
+        if(find(idDoUong)){
+            try{    
+                Connection connection = MySQLConnect.getConnection();
+                String query = "DELETE FROM DoUong WHERE idDoUong = ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, idDoUong);
+                statement.executeUpdate();
+                JOptionPane.showMessageDialog(frXoaDoUong, "Xoá thành công", "Success", JOptionPane.INFORMATION_MESSAGE);           
+                }
+                catch(SQLException e){
+                    e.printStackTrace();
+                }
+        }
+        else{
+            JOptionPane.showMessageDialog(frXoaDoUong, "Xoá thất bại, chưa nhập ID hoặc ID không tồn tại", "Invalidation", JOptionPane.ERROR_MESSAGE);              
+        }
+    }
+
+    public boolean find(String idDoUong) {
+        Boolean check_find = false;
+        try{    
+            Connection connection = MySQLConnect.getConnection();
+            String query = "SELECT * FROM DoUong WHERE idDoUong = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, idDoUong);
+            ResultSet rs = statement.executeQuery(); 
+            if (rs.next()) {
+                String id  = rs.getString("idDoUong");
+                String tenDoUong = rs.getString("tenDoUong");
+                double price = rs.getDouble("Price");
+                doUong = new DoUong(id,tenDoUong,price);
+                check_find = true;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return check_find;
+    }
+}

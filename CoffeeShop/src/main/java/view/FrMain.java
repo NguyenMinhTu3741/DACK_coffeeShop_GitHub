@@ -3,13 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
-import java.awt.Toolkit;
+// import sql librabry
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import utils.MySQLConnect;
+import java.awt.Toolkit;
+// import file
+import entity.*;
+import view.*;
+import controller.MainController;
+import controller.DoUongController;
+import controller.LoginController;
+
+// import other library
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,29 +26,30 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrMain extends javax.swing.JFrame {
     public FrLogin frLogin;
+    public FrMain frMain;
+    public FrDoUong frDoUong;
+    public FrNhanVien frNhanVien;
+    public MainController mainController;   
+    /**
+     *
+     * @param mainContrloller
+     */
 
-    public FrLogin getFrLogin() {
-        return frLogin;
-    }
-
-    public void setFrLogin(FrLogin frLogin) {
-        this.frLogin = frLogin;
-    }
-    
-    
-    
     /**
      * Creates new form FrMain
      */
-    public FrMain() {
+    public FrMain(){
         initComponents();
         setTitle("Thông tin quán");
         pnXinChao.setSize(50, 50);
         setBackground(new java.awt.Color(255, 255, 204));
     }
-    
-    
 
+    public void setMainController(MainController mainController){
+        this.mainController = mainController;
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -221,16 +230,19 @@ public class FrMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
-        // TODO add your handling code here:
+        frNhanVien = new FrNhanVien();
+        frNhanVien.runMain();
+        setVisible(false);
     }//GEN-LAST:event_btnNhanVienActionPerformed
 
     private void lbXinChaoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lbXinChaoAncestorAdded
-        lbXinChao.setText("Xin chào " + frLogin.getUserName());
-        System.out.println("Hâhha");
+        String fullName = mainController.loginController.userAccount.fullName;
+        lbXinChao.setText("Xin chào " + fullName);
     }//GEN-LAST:event_lbXinChaoAncestorAdded
 
     private void lbChucVuAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lbChucVuAncestorAdded
-        lbChucVu.setText("Chức vụ: " + frLogin.getChucVu(frLogin.userName));
+        String chucVu = mainController.loginController.chucVu.getTenChucVu();
+        lbChucVu.setText("Chức vụ: " + chucVu);
     }//GEN-LAST:event_lbChucVuAncestorAdded
 
     private void pnXinChaoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_pnXinChaoAncestorAdded
@@ -242,8 +254,9 @@ public class FrMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnDoUongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoUongActionPerformed
-        FrDoUong frdouong = new FrDoUong();
-        frdouong.runMain();
+        frDoUong = new FrDoUong();
+        frDoUong.setMainController(mainController);
+        frDoUong.runMain();
         setVisible(false);
     }//GEN-LAST:event_btnDoUongActionPerformed
 
@@ -274,18 +287,18 @@ public class FrMain extends javax.swing.JFrame {
         }
         //</editor-fold>
     }
-        public static void runMain(){
-            FrMain frmain = new FrMain();
+        public void runMain(){
+            FrMain frMain = new FrMain();
             int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
             int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-            int x = (screenWidth - frmain.getWidth()) / 2;
-            int y = (screenHeight - frmain.getHeight()) / 2;
+            int x = (screenWidth - getWidth()) / 2;
+            int y = (screenHeight - getHeight()) / 2;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                frmain.setVisible(true);
-                frmain.setLocation(x, y);
-                frmain.setResizable(false); 
+                setVisible(true);
+                setLocation(x, y);
+                setResizable(false); 
             }
         });
     }
@@ -301,5 +314,7 @@ public class FrMain extends javax.swing.JFrame {
     private javax.swing.JLabel lbXinChao;
     private javax.swing.JPanel pnXinChao;
     // End of variables declaration//GEN-END:variables
+
+
 }
 

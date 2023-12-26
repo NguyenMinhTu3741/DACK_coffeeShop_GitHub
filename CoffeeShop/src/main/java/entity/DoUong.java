@@ -9,8 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
-public class Food {
-    public String idFood;
-    public String foodName;
-    public Double price;
+public class DoUong {
+    public String idDoUong;
+    public String tenDoUong;
+    public Double price; 
 }

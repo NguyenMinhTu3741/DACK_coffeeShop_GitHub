@@ -14,3 +14,4 @@ public class ChucVu {
     public String tenChucVu;
     public Double luongCoBan;
 }
+
