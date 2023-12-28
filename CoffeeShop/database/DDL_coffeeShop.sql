@@ -63,6 +63,11 @@ foreign key(idDoUong) references DoUong(idDoUong);
 alter table UserAccount add constraint FK_IDCHUCVU
 foreign key(idChucVu) references ChucVu(idChucVu);
 
+-- create to test system
+INSERT INTO ChucVu (idChucVu, tenChucVu, luongCoBan) VALUES
+('CV001', 'Nhân viên', 5000000),
+('CV002', 'Quản lý', 10000000),
+('CV003', 'Giám đốc', 20000000);
 INSERT INTO UserAccount (idChucVu, userName, passWord, fullName, address, email) VALUES
 ('CV001', '1', '1', 'Test', 'Bình Dương', 'justtest@gmail.com');
 

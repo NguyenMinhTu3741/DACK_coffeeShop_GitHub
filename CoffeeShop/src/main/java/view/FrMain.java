@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
  * @author nguyentu
  */
 public class FrMain extends javax.swing.JFrame {
+    // properties
     public FrLogin frLogin;
     public FrMain frMain;
     public FrDoUong frDoUong;
@@ -38,13 +39,14 @@ public class FrMain extends javax.swing.JFrame {
     /**
      * Creates new form FrMain
      */
+    // constructor 
     public FrMain(){
         initComponents();
         setTitle("Thông tin quán");
         pnXinChao.setSize(50, 50);
         setBackground(new java.awt.Color(255, 255, 204));
     }
-
+    // setter for controller of 
     public void setMainController(MainController mainController){
         this.mainController = mainController;
     }
@@ -231,6 +233,7 @@ public class FrMain extends javax.swing.JFrame {
 
     private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
         frNhanVien = new FrNhanVien();
+        frNhanVien.setMainController(mainController);
         frNhanVien.runMain();
         setVisible(false);
     }//GEN-LAST:event_btnNhanVienActionPerformed

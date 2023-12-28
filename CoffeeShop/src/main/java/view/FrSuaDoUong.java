@@ -3,40 +3,52 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
+// import file
 import entity.DoUong;
+import controller.DoUongController;
+import controller.MainController;
+// other librabry
 import java.awt.Toolkit;
 import static java.lang.Double.parseDouble;
 import javax.swing.JOptionPane;
-import controller.DoUongController;
+
 
 /**
  *
  * @author nguyentu
  */
 public class FrSuaDoUong extends javax.swing.JFrame {
-
+    // properties
      public FrDoUong frDoUong; 
      public DoUong doUong;
      public DoUongController doUongService;
      public FrSuaDoUong frSuaDoUong;
+     public DoUongController doUongController;
+     public MainController mainController;
     /**
      * 
      * Creates new form FrSuaDoUong
      */
      
-     public void setDoUong(DoUong doUong){
-         this.doUong = doUong;
-     }
-     
-     
-    public void getDoUong(DoUong doUong){
-        this.doUong = doUong;
-    }
+     // main constructor
     public FrSuaDoUong() {
         setTitle("Sửa thông tin đồ uống");
         initComponents();
     }
+     // setter and getter
+     public void setDoUong(DoUong doUong){
+         this.doUong = doUong;
+     }
+     
+    public void getDoUong(DoUong doUong){
+        this.doUong = doUong;
+    }
+    // setter of main controller
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -277,7 +289,8 @@ public class FrSuaDoUong extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnTroVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroVeActionPerformed
-        // FrDoUong frDoUong = new FrDoUong();
+        FrDoUong frDoUong = new FrDoUong();
+        frDoUong.setMainController(mainController);
         frDoUong.runMain();
         setVisible(false);
         dispose(); 
@@ -349,17 +362,16 @@ public class FrSuaDoUong extends javax.swing.JFrame {
             }
         });
     }
-        public void runMain(){
-        FrSuaDoUong frSuaDoUong = new FrSuaDoUong();        
+        public void runMain(){       
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-        int x = (screenWidth - frSuaDoUong.getWidth()) / 2;
-        int y = (screenHeight - frSuaDoUong.getHeight()) / 2;
+        int x = (screenWidth - getWidth()) / 2;
+        int y = (screenHeight -getHeight()) / 2;
         java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
-        frSuaDoUong.setVisible(true);
-        frSuaDoUong.setLocation(x, y);
-        frSuaDoUong.setResizable(false);
+        setVisible(true);
+        setLocation(x, y);
+        setResizable(false);
         }
 });
 }

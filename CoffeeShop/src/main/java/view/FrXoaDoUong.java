@@ -3,24 +3,39 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
+// improt file
+import controller.DoUongController;
+import controller.MainController;
+// import other librabry
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
-import view.*;
-import controller.DoUongController;
+
 /**
  *
  * @author nguyentu
  */
 public class FrXoaDoUong extends javax.swing.JFrame {
-    
+    public MainController mainController;
     /**
      * Creates new form FrXoaDoUong
      */
+    // main controller
     public FrXoaDoUong() {
         setTitle("Xoá đồ uống");
         initComponents();
     }
+    // setter and getter of main controller
+
+    public MainController getMainController() {
+        return mainController;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -123,6 +138,7 @@ public class FrXoaDoUong extends javax.swing.JFrame {
 
     private void btnTroVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroVeActionPerformed
         FrDoUong frDoUong = new FrDoUong();
+        frDoUong.setMainController(mainController);
         frDoUong.runMain();
         setVisible(false);
         dispose();
@@ -171,17 +187,16 @@ public class FrXoaDoUong extends javax.swing.JFrame {
             }
         });
     }
-    public void runMain(){
-        FrXoaDoUong frXoaDoUong = new FrXoaDoUong();        
+    public void runMain(){      
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-        int x = (screenWidth - frXoaDoUong.getWidth()) / 2;
-        int y = (screenHeight - frXoaDoUong.getHeight()) / 2;
+        int x = (screenWidth - getWidth()) / 2;
+        int y = (screenHeight - getHeight()) / 2;
         java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
-        frXoaDoUong.setVisible(true);
-        frXoaDoUong.setLocation(x, y);
-        frXoaDoUong.setResizable(false);
+        setVisible(true);
+        setLocation(x, y);
+        setResizable(false);
         }
 });
 }

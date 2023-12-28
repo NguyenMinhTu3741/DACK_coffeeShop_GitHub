@@ -1,10 +1,8 @@
 package entity;
-
-import lombok.AllArgsConstructor;
+// lombok
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -16,4 +14,13 @@ public class UserAccount {
     public String fullName;
     public String address;
     public String email;
+
+    public UserAccount(String idChucVu, String userName, String passWord, String fullName, String address, String email) {
+        this.idChucVu = idChucVu;
+        this.userName = userName;
+        this.passWord = passWord;
+        this.fullName = fullName;
+        this.address = address;
+        this.email = email;
+    }  
 }

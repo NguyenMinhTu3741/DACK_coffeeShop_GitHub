@@ -28,7 +28,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 
-
 /**
  *
  * @author nguyentu
@@ -37,6 +36,7 @@ public class FrDoUong extends javax.swing.JFrame {
     /**
      * Creates new form FrDoUong
      */
+    // properties 
     public FrDoUong frDoUong;
     public FrMain frMain;
     public DoUongController doUongController;
@@ -44,12 +44,12 @@ public class FrDoUong extends javax.swing.JFrame {
     public FrSuaDoUong frSuaDoUong;
     public MainController mainController;
 
-   
+    // constructor main 
     public FrDoUong(){
         setTitle("Danh sách đồ uống");
         initComponents();
     }
-    
+    // getter and setter for controller main
     public MainController getMainController() {
         return mainController;
     }
@@ -57,7 +57,10 @@ public class FrDoUong extends javax.swing.JFrame {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-    
+    // setter of DoUongController
+    public void setDoUongController(DoUongController doUongController) {
+        this.doUongController = doUongController;
+    }
     
     
     
@@ -275,8 +278,6 @@ public class FrDoUong extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(this, "Không được để trống", "Invalidation", JOptionPane.ERROR_MESSAGE);           
         }
-
-        
     }//GEN-LAST:event_btnThemActionPerformed
 
     public boolean check_empty(){
@@ -291,6 +292,7 @@ public class FrDoUong extends javax.swing.JFrame {
     } 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         frSuaDoUong = new FrSuaDoUong();
+        frSuaDoUong.setMainController(mainController);
         frSuaDoUong.runMain();
         setVisible(false);
         
@@ -298,6 +300,7 @@ public class FrDoUong extends javax.swing.JFrame {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         FrXoaDoUong frXoaDoUong = new FrXoaDoUong();
+        frXoaDoUong.setMainController(mainController);
         frXoaDoUong.runMain();
         setVisible(false);
         dispose();
@@ -307,9 +310,6 @@ public class FrDoUong extends javax.swing.JFrame {
         FrMain frMain = new FrMain();
         frMain.setMainController(mainController);
         frMain.runMain();
-        if(mainController == null){
-            System.out.println("Null cmnrrrr");
-        }
         setVisible(false);
         dispose(); 
     }//GEN-LAST:event_btnTrangChuActionPerformed

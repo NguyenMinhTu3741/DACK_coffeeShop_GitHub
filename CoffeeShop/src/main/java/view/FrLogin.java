@@ -30,6 +30,7 @@ import javax.swing.*;
  * @author nguyentu
  */
 public class FrLogin extends javax.swing.JFrame {
+    // properties
     public UserAccount user;
     public LoginController loginController;
     public MainController mainController;
@@ -38,6 +39,7 @@ public class FrLogin extends javax.swing.JFrame {
     /**
      * Creates new form login
      */
+    // constructor
     public FrLogin() {
         initComponents();
     }
@@ -187,8 +189,10 @@ public class FrLogin extends javax.swing.JFrame {
             user.setFullName(loginController.getFullName(user));
             JOptionPane.showMessageDialog(this, "Xin chào " + user.getFullName(),"Success", JOptionPane.INFORMATION_MESSAGE);
             mainController = new MainController(loginController);
-            frMain = new FrMain();
-            frMain.setMainController(mainController);
+            frMain = new FrMain(); 
+            // ive maincontroller to Frmain and its contain logincontroller
+            // On the other hand purpose is to save userName and chucVu
+            frMain.setMainController(mainController); 
             frMain.runMain();
             setVisible(false);
         }
@@ -243,7 +247,7 @@ public class FrLogin extends javax.swing.JFrame {
 
         /* Create and display the form */
             
-             FrLogin frlogin = new FrLogin();
+            FrLogin frlogin = new FrLogin();
             int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
             int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
             int x = (screenWidth - frlogin.getWidth()) / 2;

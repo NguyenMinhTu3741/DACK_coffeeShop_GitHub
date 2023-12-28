@@ -30,9 +30,6 @@ public class DoUongController{
     public FrXoaDoUong frXoaDoUong;
     public MainController mainController;
     
-    public DoUongController(MainController mainController) {
-        this.mainController = mainController;
-    }
     public DoUongController(FrDoUong frDoUong) {
         this.frDoUong = frDoUong;
     }
