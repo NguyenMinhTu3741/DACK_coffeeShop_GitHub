@@ -7,6 +7,7 @@ package controller;
 import entity.UserAccount;
 import utils.MySQLConnect;
 import view.FrNhanVien;
+import view.FrXoaNhanVien;
 // import sql library
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +23,7 @@ public class NhanVienController {
     // properties
     public UserAccount user; 
     public FrNhanVien frNhanVien;
+    public FrXoaNhanVien frXoaNhanVien;
  
     // constructor
     public NhanVienController() {
@@ -37,6 +39,11 @@ public class NhanVienController {
         return user;
     }
     
+    // setter of FrXoaDoUong
+    public void xoaNhanVien(FrXoaNhanVien frXoaNhanVien){
+        this.frXoaNhanVien = frXoaNhanVien;
+    }
+    
     
     
 
@@ -44,7 +51,7 @@ public class NhanVienController {
         user = new UserAccount();
         user = (UserAccount) object;
         if(checkDuplicateID(user.userName)){
-            JOptionPane.showMessageDialog(frNhanVien, "ID bị trùng xin vui lòng nhập lại ", "Invalidation", JOptionPane.ERROR_MESSAGE);  
+            JOptionPane.showMessageDialog(frNhanVien, "ID bị trùng xin vui lòng nhập lại ", "Error", JOptionPane.ERROR_MESSAGE);  
         }
         else{
             try{
@@ -65,7 +72,7 @@ public class NhanVienController {
         }
         
     }
-    public void update(Object object){
+    public void update(Object object, String inputUserName){
         user = new UserAccount();
         user = (UserAccount) object;
         try{
@@ -74,16 +81,37 @@ public class NhanVienController {
 "            SET userName = ?, passWord = ?, fullName = ?, address = ?, email = ?, idChucVu = ? \n" +
 "            WHERE userName = ? ";
             PreparedStatement statement = connection.prepareStatement(query);
-            // statement.setString()
+            statement.setString(1,user.userName);
+            statement.setString(2,user.passWord);
+            statement.setString(3,user.fullName);
+            statement.setString(4,user.address);
+            statement.setString(5,user.email);
+            statement.setString(6,user.idChucVu);
+            statement.setString(7,inputUserName);
             statement.executeUpdate();
-            
         }catch(SQLException e){
             e.printStackTrace();
         }
     }
     
-    
-    
+    public void delete(String userName){
+        if(find(userName)){
+            try{
+            Connection connection = MySQLConnect.getConnection();
+            String query = "DELETE FROM UserAccount WHERE userName = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1,userName);
+            statement.executeUpdate();
+            JOptionPane.showMessageDialog(frXoaNhanVien, "Xoá thành công", "Success", JOptionPane.INFORMATION_MESSAGE);           
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(frXoaNhanVien, "Xoá thất bại, chưa nhập ID hoặc ID không tồn tại", "Error", JOptionPane.ERROR_MESSAGE);              
+        }
+        
+    }
     
     public boolean checkDuplicateID(String userName){
         Boolean checkDuplicate = false;
@@ -145,7 +173,7 @@ public class NhanVienController {
         Boolean check = false;
         try{
             Connection connection = MySQLConnect.getConnection();
-            String query = "SELECT * FROM UserAccount WHERE userName = ?";
+            String query = "SELECT * FROM UserAccount WHERE userName = ? ";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1,userName);
             ResultSet rs = statement.executeQuery();

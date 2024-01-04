@@ -181,23 +181,23 @@ public class FrLogin extends javax.swing.JFrame {
         user.setPassWord(new String(txtPassword.getPassword()));
         // check empty
         loginController = new LoginController(user);
-        loginController.checkEmpty(user, this);
-        loginController.getChucVu(user);
-        // check exists
-        boolean checkValid = loginController.checkCredentials(user);
-        if(checkValid){
-            user.setFullName(loginController.getFullName(user));
-            JOptionPane.showMessageDialog(this, "Xin chào " + user.getFullName(),"Success", JOptionPane.INFORMATION_MESSAGE);
-            mainController = new MainController(loginController);
-            frMain = new FrMain(); 
-            // ive maincontroller to Frmain and its contain logincontroller
-            // On the other hand purpose is to save userName and chucVu
-            frMain.setMainController(mainController); 
-            frMain.runMain();
-            setVisible(false);
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu sai", "Authentication", JOptionPane.ERROR_MESSAGE);
+        Boolean checkEmpty = loginController.checkEmpty(user, this);
+        if(!checkEmpty){
+            loginController.getChucVu(user);
+            // check exists
+            boolean checkValid = loginController.checkCredentials(user);
+            if(checkValid){
+                user.setFullName(loginController.getFullName(user));
+                JOptionPane.showMessageDialog(this, "Xin chào " + user.getFullName(),"Success", JOptionPane.INFORMATION_MESSAGE);
+                mainController = new MainController(loginController);
+                frMain = new FrMain(); 
+                frMain.setMainController(mainController); 
+                frMain.runMain();
+                setVisible(false);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu sai", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnOkActionPerformed
        

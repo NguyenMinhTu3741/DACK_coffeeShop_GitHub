@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class DoUong {
-    public String idDoUong;
     public String tenDoUong;
     public Double price; 
 }

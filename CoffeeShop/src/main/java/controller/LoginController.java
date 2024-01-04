@@ -31,29 +31,36 @@ public class LoginController {
     }
     
     // check empty input
-    public void checkEmpty(UserAccount userAccount, FrLogin frLogin){
+    public boolean checkEmpty(UserAccount userAccount, FrLogin frLogin){
+        boolean check = false;
         boolean checkBothEmpty = false;
         boolean checkOneEmpty = false;
         StringBuilder sb = new StringBuilder();
         if(userAccount.userName.equals("") && userAccount.passWord.equals("")){
             checkBothEmpty = true;
+            check = true;
         }
         if(userAccount.userName.equals("") && checkBothEmpty == false){
             checkOneEmpty = true;
+            check = true;
          sb.append("Tài khoản không được bỏ trống"); 
          
         }
         if(userAccount.passWord.equals("") && checkBothEmpty == false){
             checkOneEmpty = true;
+            check = true;
             sb.append("Mật khẩu không được bỏ trống");
         }
         if (checkBothEmpty == true)
         {
+            check = true;
             JOptionPane.showMessageDialog(frLogin,"Tài khoản và mật khẩu không được bỏ trống", "Authentication",JOptionPane.ERROR_MESSAGE);
         }
         if(sb.length() > 0){
+            check = true;
             JOptionPane.showMessageDialog(frLogin,sb.toString(), "Authentication",JOptionPane.ERROR_MESSAGE);
         }
+        return check;
     }
     // check userName and passWord exists
     public boolean checkCredentials(UserAccount userAccount){

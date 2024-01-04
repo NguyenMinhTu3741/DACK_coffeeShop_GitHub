@@ -202,7 +202,7 @@
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="btnNhapLai" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnXoa" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="cbChucVu" alignment="0" min="-2" pref="119" max="-2" attributes="0"/>
                                   </Group>
@@ -252,7 +252,7 @@
                       <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSua" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="btnNhapLai" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
-                      <Component id="jButton5" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="btnXoa" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               </Group>
@@ -384,7 +384,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNhapLaiActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton5">
+        <Component class="javax.swing.JButton" name="btnXoa">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="99" red="66" type="rgb"/>
@@ -397,6 +397,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Xo&#xe1;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

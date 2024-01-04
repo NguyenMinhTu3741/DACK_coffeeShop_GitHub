@@ -23,13 +23,21 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-              <Component id="btnTroVe" min="-2" max="-2" attributes="0"/>
-              <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnTroVe" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel1" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -38,11 +46,10 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="btnTroVe" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,7 +60,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="XO&#xc1; TH&#xd4;NG TIN &#x110;&#x1ed2; U&#x1ed0;NG"/>
+        <Property name="text" type="java.lang.String" value="XO&#xc1;  TH&#xd4;NG TIN NH&#xc2;N VI&#xca;N"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnTroVe">
@@ -87,13 +94,13 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtNhapDoUong" min="-2" pref="154" max="-2" attributes="0"/>
+                          <Component id="txtNhapTaiKhoan" min="-2" pref="154" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
@@ -110,7 +117,7 @@
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtNhapDoUong" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtNhapTaiKhoan" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="24" max="32767" attributes="0"/>
                   <Component id="btnXoa" min="-2" max="-2" attributes="0"/>
@@ -124,10 +131,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="13" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nh&#x1ead;p ID &#x111;&#x1ed3; u&#x1ed1;ng"/>
+            <Property name="text" type="java.lang.String" value="Nh&#x1ead;p t&#xe0;i kho&#x1ea3;n"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtNhapDoUong">
+        <Component class="javax.swing.JTextField" name="txtNhapTaiKhoan">
         </Component>
         <Component class="javax.swing.JButton" name="btnXoa">
           <Properties>

@@ -1,16 +1,32 @@
 package entity;
-import javax.swing.JMenu;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
+
 public class Ban {
     public String idBan;
+    public int soBan;
     public int tinhTrang;
-    public JMenu jMenu1;
-    // End of variables declaration
+
+    public String getIdBan() {
+        return idBan;
+    }
+
+    public void setIdBan(String idBan) {
+        this.idBan = idBan;
+    }
+
+    public int getSoBan() {
+        return soBan;
+    }
+
+    public void setSoBan(int soBan) {
+        this.soBan = soBan;
+    }
+
+    public int getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(int tinhTrang) {
+        this.tinhTrang = tinhTrang;
+    }
+    
 }

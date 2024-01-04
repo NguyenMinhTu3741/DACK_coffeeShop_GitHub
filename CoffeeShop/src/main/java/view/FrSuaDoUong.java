@@ -21,9 +21,9 @@ public class FrSuaDoUong extends javax.swing.JFrame {
     // properties
      public FrDoUong frDoUong; 
      public DoUong doUong;
-     public DoUongController doUongService;
-     public FrSuaDoUong frSuaDoUong;
      public DoUongController doUongController;
+     public FrSuaDoUong frSuaDoUong;
+     // public DoUongController doUongController;
      public MainController mainController;
     /**
      * 
@@ -63,10 +63,8 @@ public class FrSuaDoUong extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtIDDoUong = new javax.swing.JTextField();
         txtTenDoUong = new javax.swing.JTextField();
         txtGiaBan = new javax.swing.JTextField();
         btnXoaThongTinCu = new javax.swing.JButton();
@@ -87,12 +85,9 @@ public class FrSuaDoUong extends javax.swing.JFrame {
         jLabel1.setText("SỬA THÔNG TIN ĐỒ UỐNG");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel2.setText("Nhập ID đồ uống");
+        jLabel2.setText("Nhập tên đồ uống");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel3.setText("ID đồ uống");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("Tên đồ uống");
@@ -145,14 +140,12 @@ public class FrSuaDoUong extends javax.swing.JFrame {
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtGiaBan)
-                            .addComponent(txtTenDoUong)
-                            .addComponent(txtIDDoUong))))
+                            .addComponent(txtTenDoUong))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -160,17 +153,13 @@ public class FrSuaDoUong extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtIDDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtTenDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnXoaThongTinCu)
                     .addComponent(btnLuu)
@@ -252,42 +241,6 @@ public class FrSuaDoUong extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnXoaThongTinCuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaThongTinCuActionPerformed
-        txtGiaBan.setText("");
-        txtNhapDoUong.setText("");
-        txtTenDoUong.setText("");
-    }//GEN-LAST:event_btnXoaThongTinCuActionPerformed
-
-    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        String id = txtIDDoUong.getText();
-        String name = txtTenDoUong.getText();
-        String temp = txtGiaBan.getText();
-        if(!check_empty()){
-            Double gia = parseDouble(temp);
-            doUong = new DoUong(id,name,gia);
-            doUongService = new DoUongController();
-            // doUongService.delete(id);
-            doUongService.update(doUong);
-            txtGiaBan.setText("");
-            txtNhapDoUong.setText("");
-            txtTenDoUong.setText("");
-            txtIDDoUong.setText("");  
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Không được để trống", "Invalidation", JOptionPane.ERROR_MESSAGE);           
-        }
-        
-
-        
-    }//GEN-LAST:event_btnLuuActionPerformed
-
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-//         FrDoUong frDoUong = new FrDoUong();
-        frDoUong.runMain();
-        frSuaDoUong.setVisible(false);
-         dispose(); 
-    }//GEN-LAST:event_btnCancelActionPerformed
-
     private void btnTroVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroVeActionPerformed
         FrDoUong frDoUong = new FrDoUong();
         frDoUong.setMainController(mainController);
@@ -299,31 +252,61 @@ public class FrSuaDoUong extends javax.swing.JFrame {
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         txtGiaBan.setText("");
         txtTenDoUong.setText("");
-        txtIDDoUong.setText("");
-        String idDoUong = (new String(txtNhapDoUong.getText()));
-        doUongService = new DoUongController();
-        if(doUongService.find(idDoUong)){
+        lbLoi.setText("");
+        String name = (new String(txtNhapDoUong.getText()));
+        doUongController = new DoUongController();
+        if(doUongController.find(name)){
             frSuaDoUong = new FrSuaDoUong();
-            frSuaDoUong.setDoUong(doUongService.getDoUong());
-            String id = frSuaDoUong.doUong.getIdDoUong();
-            String name = frSuaDoUong.doUong.getTenDoUong();
+            frSuaDoUong.setDoUong(doUongController.getDoUong());
+            String tenDoUong = frSuaDoUong.doUong.getTenDoUong();
             Double price = frSuaDoUong.doUong.getPrice();
-            txtIDDoUong.setText(id);
-            txtTenDoUong.setText(name);
+            txtTenDoUong.setText(tenDoUong);
             txtGiaBan.setText(String.valueOf(price));
         }
         else{
             lbLoi.setText("*Không tìm thấy ID");
         }
         
-        // doUongService = new DoUongService(frSuaDoUong);
+        // doUongController = new doUongController(frSuaDoUong);
     }//GEN-LAST:event_btnOkActionPerformed
-    public boolean check_empty(){
-        Boolean check = false;
-        String id = txtIDDoUong.getText();
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        FrDoUong frDoUong = new FrDoUong();
+        frDoUong.setMainController(mainController);
+        frDoUong.runMain();
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
+        doUongController = new DoUongController();
+        String inputName = txtNhapDoUong.getText();
         String name = txtTenDoUong.getText();
         String temp = txtGiaBan.getText();
-        if(id.isEmpty()|| name.isEmpty() || temp.isEmpty()){
+        if(!check_empty()){
+            Double gia = parseDouble(temp);
+            doUong = new DoUong(name,gia);
+            doUongController.update(doUong, inputName);
+            txtGiaBan.setText("");
+            txtNhapDoUong.setText("");
+            txtTenDoUong.setText("");
+            lbLoi.setText("");
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Không được để trống", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnLuuActionPerformed
+
+    private void btnXoaThongTinCuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaThongTinCuActionPerformed
+        txtGiaBan.setText("");
+        txtNhapDoUong.setText("");
+        txtTenDoUong.setText("");
+    }//GEN-LAST:event_btnXoaThongTinCuActionPerformed
+    public boolean check_empty(){
+        Boolean check = false;
+        String name = txtTenDoUong.getText();
+        String temp = txtGiaBan.getText();
+        if(name.isEmpty() || temp.isEmpty()){
             return true;
         }
         return check;
@@ -384,7 +367,6 @@ public class FrSuaDoUong extends javax.swing.JFrame {
     private javax.swing.JButton btnXoaThongTinCu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
@@ -392,7 +374,6 @@ public class FrSuaDoUong extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel lbLoi;
     private javax.swing.JTextField txtGiaBan;
-    private javax.swing.JTextField txtIDDoUong;
     private javax.swing.JTextField txtNhapDoUong;
     private javax.swing.JTextField txtTenDoUong;
     // End of variables declaration//GEN-END:variables

@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-// improt file
-import controller.DoUongController;
+// import file
 import controller.MainController;
+import controller.HoaDonController;
+import entity.HoaDon;
 // import other librabry
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
@@ -14,28 +15,28 @@ import javax.swing.JOptionPane;
  *
  * @author nguyentu
  */
-public class FrXoaDoUong extends javax.swing.JFrame {
+public class FrXoaDoUongCTHD extends javax.swing.JFrame {
     public MainController mainController;
+    public FrThemDoUong frThemDoUong;
+    public HoaDonController hoaDonController;
+    public HoaDon hoaDon;
     /**
-     * Creates new form FrXoaDoUong
+     * Creates new form FrXoaDoUongCTHD
      */
-    // main controller
-    public FrXoaDoUong() {
-        setTitle("Xoá đồ uống");
+    
+    // main constructor
+    public FrXoaDoUongCTHD() {
         initComponents();
     }
-    // setter and getter of main controller
-
-    public MainController getMainController() {
-        return mainController;
-    }
-
+    
+    // setter
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-    
-    
-    
+
+    public void setHoaDon(HoaDon hoaDon) {
+        this.hoaDon = hoaDon;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,7 +57,7 @@ public class FrXoaDoUong extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("XOÁ THÔNG TIN ĐỒ UỐNG");
+        jLabel1.setText("XOÁ  ĐỒ UỐNG");
 
         btnTroVe.setBackground(new java.awt.Color(102, 153, 255));
         btnTroVe.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -71,7 +72,7 @@ public class FrXoaDoUong extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel2.setText("Nhập ID đồ uống");
+        jLabel2.setText("Nhập tên đồ uống");
 
         btnXoa.setBackground(new java.awt.Color(102, 153, 255));
         btnXoa.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -119,7 +120,7 @@ public class FrXoaDoUong extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(20, 20, 20))
+                .addGap(79, 79, 79))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,20 +138,25 @@ public class FrXoaDoUong extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTroVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroVeActionPerformed
-        FrDoUong frDoUong = new FrDoUong();
-        frDoUong.setMainController(mainController);
-        frDoUong.runMain();
+        frThemDoUong = new FrThemDoUong();
+        frThemDoUong.setMainController(mainController);
+        frThemDoUong.setHoaDon(hoaDon);
+        frThemDoUong.runMain();
         setVisible(false);
         dispose();
     }//GEN-LAST:event_btnTroVeActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-       FrXoaDoUong frXoaDoUong = new FrXoaDoUong();
-        DoUongController doUongController = new DoUongController();
-        String name = txtNhapDoUong.getText();
-        doUongController.xoaDoUong(frXoaDoUong);
-        doUongController.delete(name);
-        txtNhapDoUong.setText("");    
+        String tenDoUong = txtNhapDoUong.getText();
+        hoaDonController = new HoaDonController();
+        if(hoaDonController.checkDoUongInCTHD(hoaDon.idHoaDon, tenDoUong)){
+            hoaDonController.deleteDoUongFromCTHD(hoaDon.idHoaDon, tenDoUong);
+            JOptionPane.showMessageDialog(this, "Xoá thành công", "Success", JOptionPane.INFORMATION_MESSAGE);           
+        }else{
+            
+            JOptionPane.showMessageDialog(this, "Đồ uống hiện không có", "Error", JOptionPane.ERROR_MESSAGE); 
+        }
+        txtNhapDoUong.setText("");
     }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
@@ -170,36 +176,39 @@ public class FrXoaDoUong extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrXoaDoUong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrXoaDoUongCTHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrXoaDoUong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrXoaDoUongCTHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrXoaDoUong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrXoaDoUongCTHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrXoaDoUong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrXoaDoUongCTHD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrXoaDoUong().setVisible(true);
+                new FrXoaDoUongCTHD().setVisible(true);
             }
         });
     }
-    public void runMain(){      
+        public void runMain(){
+        FrMain frMain = new FrMain();
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
         int x = (screenWidth - getWidth()) / 2;
         int y = (screenHeight - getHeight()) / 2;
-        java.awt.EventQueue.invokeLater(new Runnable() {
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
-        setVisible(true);
-        setLocation(x, y);
-        setResizable(false);
+            setVisible(true);
+            setLocation(x, y);
+            setResizable(false); 
         }
-});
+    });
 }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTroVe;
     private javax.swing.JButton btnXoa;

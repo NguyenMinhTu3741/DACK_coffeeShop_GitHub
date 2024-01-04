@@ -160,7 +160,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnViTri" alignment="1" max="32767" attributes="0"/>
+                      <Component id="btnKho" alignment="1" max="32767" attributes="0"/>
                       <Component id="btnDoUong" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnNhanVien" alignment="1" max="32767" attributes="0"/>
                       <Component id="btnHoaDon" alignment="0" pref="175" max="32767" attributes="0"/>
@@ -175,7 +175,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnHoaDon" min="-2" pref="43" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnViTri" min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="btnKho" min="-2" pref="43" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnDoUong" min="-2" pref="43" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -203,7 +203,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDoUongActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnViTri">
+        <Component class="javax.swing.JButton" name="btnKho">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="99" red="66" type="rgb"/>
@@ -214,7 +214,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="V&#x1eca; TR&#xcd;"/>
+            <Property name="text" type="java.lang.String" value="KHO"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnNhanVien">

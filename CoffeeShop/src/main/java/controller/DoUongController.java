@@ -63,17 +63,16 @@ public class DoUongController{
     public void create(Object object) {
         DoUong doUong = new DoUong();
         doUong = (DoUong) object;
-        if((checkDuplicateID(doUong.idDoUong))){
-            JOptionPane.showMessageDialog(frDoUong, "ID bị trùng xin vui lòng nhập lại ", "Invalidation", JOptionPane.ERROR_MESSAGE);  
+        if((checkDuplicate(doUong.tenDoUong))){
+            JOptionPane.showMessageDialog(frDoUong, "Tên đồ uống bị trùng xin vui lòng nhập lại ", "Invalidation", JOptionPane.ERROR_MESSAGE);  
         }
         else{
             try{
                 Connection connection = MySQLConnect.getConnection();
-                String query = "INSERT INTO DoUong (idDoUong, tenDoUong, price) VALUES(?,?,?)";
+                String query = "INSERT INTO DoUong (tenDoUong, price) VALUES(?,?)";
                 PreparedStatement statement = connection.prepareStatement(query);
-                statement.setString(1,doUong.idDoUong);
-                statement.setString(2,doUong.tenDoUong);
-                statement.setDouble(3,doUong.price);
+                statement.setString(1,doUong.tenDoUong);
+                statement.setDouble(2,doUong.price);
                 statement.executeUpdate();
                 JOptionPane.showMessageDialog(frDoUong, "Nhập thành công", "Success", JOptionPane.INFORMATION_MESSAGE);           
             }catch(SQLException e){
@@ -83,7 +82,7 @@ public class DoUongController{
 
     }
   
-    public boolean checkDuplicateID(String id){
+    public boolean checkDuplicate(String name){
     boolean check = false;
     try{
         Connection connection = MySQLConnect.getConnection();
@@ -91,8 +90,8 @@ public class DoUongController{
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet rs = statement.executeQuery();
         while(rs.next()){
-            String id_temp = rs.getString("idDoUong");
-            if(id.equals(id_temp)){
+            String tempName = rs.getString("tenDoUong");
+            if(tempName.equals(name)){
                 check = true;
                 break;
             }
@@ -103,37 +102,33 @@ public class DoUongController{
        return check;
 }
 
-    public void update(Object object) {
+    public void update(Object object, String tenDoUong) {
         DoUong doUong = new DoUong();
         doUong = (DoUong) object;
         // this.doUong = (DoUong) object;
-        if(find(doUong.getIdDoUong())){
-            try{
-            Connection connection = MySQLConnect.getConnection();
-            String query = "UPDATE DoUong SET tenDoUong = ?, price = ? WHERE idDoUong = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1,doUong.tenDoUong);
-            statement.setDouble(2,doUong.price);
-            statement.setString(3,doUong.idDoUong);
-            statement.executeUpdate();
-            JOptionPane.showMessageDialog(frSuaDoUong, "Nhập thành công", "Success", JOptionPane.INFORMATION_MESSAGE);           
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+        try{
+        Connection connection = MySQLConnect.getConnection();
+        String query = "UPDATE DoUong SET tenDoUong = ?, price = ? WHERE tenDoUong = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1,doUong.tenDoUong);
+        statement.setDouble(2,doUong.price);
+        statement.setString(3,tenDoUong);
+        statement.executeUpdate();
+        JOptionPane.showMessageDialog(frSuaDoUong, "Nhập thành công", "Success", JOptionPane.INFORMATION_MESSAGE);           
+        }catch(SQLException e){
+            e.printStackTrace();
         }
-        else{
-            JOptionPane.showMessageDialog(frSuaDoUong, "Nhập thất bại, ID không tồn tại", "Invalidation", JOptionPane.ERROR_MESSAGE);           
-            
-        }
+
+
 }
-    public void delete(String idDoUong) {
+    public void delete(String tenDoUong) {
         Boolean check_delete = false;
-        if(find(idDoUong)){
+        if(find(tenDoUong)){
             try{    
                 Connection connection = MySQLConnect.getConnection();
-                String query = "DELETE FROM DoUong WHERE idDoUong = ?";
+                String query = "DELETE FROM DoUong WHERE tenDoUong = ?";
                 PreparedStatement statement = connection.prepareStatement(query);
-                statement.setString(1, idDoUong);
+                statement.setString(1, tenDoUong);
                 statement.executeUpdate();
                 JOptionPane.showMessageDialog(frXoaDoUong, "Xoá thành công", "Success", JOptionPane.INFORMATION_MESSAGE);           
                 }
@@ -142,23 +137,22 @@ public class DoUongController{
                 }
         }
         else{
-            JOptionPane.showMessageDialog(frXoaDoUong, "Xoá thất bại, chưa nhập ID hoặc ID không tồn tại", "Invalidation", JOptionPane.ERROR_MESSAGE);              
+            JOptionPane.showMessageDialog(frXoaDoUong, "Xoá thất bại, chưa nhập tên hoặc tên không tồn tại", "Error", JOptionPane.ERROR_MESSAGE);              
         }
     }
 
-    public boolean find(String idDoUong) {
+    public boolean find(String name) {
         Boolean check_find = false;
         try{    
             Connection connection = MySQLConnect.getConnection();
-            String query = "SELECT * FROM DoUong WHERE idDoUong = ?";
+            String query = "SELECT * FROM DoUong WHERE tenDoUong = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, idDoUong);
+            statement.setString(1, name);
             ResultSet rs = statement.executeQuery(); 
             if (rs.next()) {
-                String id  = rs.getString("idDoUong");
                 String tenDoUong = rs.getString("tenDoUong");
                 double price = rs.getDouble("Price");
-                doUong = new DoUong(id,tenDoUong,price);
+                doUong = new DoUong(tenDoUong,price);
                 check_find = true;
             }
         } catch(SQLException e){

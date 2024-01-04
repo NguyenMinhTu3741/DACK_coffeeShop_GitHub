@@ -7,8 +7,9 @@ package view;
 import controller.MainController;
 import controller.NhanVienController;
 import entity.UserAccount;
-// other file
+// other librabry
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 /**
  *
  * @author nguyentu
@@ -46,10 +47,6 @@ public class FrSuaNhanVien extends javax.swing.JFrame {
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
     }
-    
-    
-    
-    
 
     
     /**
@@ -159,7 +156,7 @@ public class FrSuaNhanVien extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnXoaThongTinCu2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnLuu2, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                        .addComponent(btnLuu2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCancel2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -247,25 +244,30 @@ public class FrSuaNhanVien extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnTroVe)
             .addGroup(layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTroVe)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(jLabel1)))
+                .addContainerGap(182, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtNhapTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(btnOk))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lbLoi)))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(txtNhapTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(btnOk)))
+                        .addGap(30, 30, 30))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lbLoi, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +283,7 @@ public class FrSuaNhanVien extends javax.swing.JFrame {
                         .addComponent(txtNhapTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnOk)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbLoi))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -293,19 +295,63 @@ public class FrSuaNhanVien extends javax.swing.JFrame {
     private void btnXoaThongTinCu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaThongTinCu2ActionPerformed
         txtHoVaTen.setText("");
         txtMatKhau.setText("");
-        txtNhapTaiKhoan.setText("");
         txtNoiO.setText("");
-        txtTaiKhoan.setText("");
         txtEmail.setText("");
+        cbChucVu.setSelectedItem("----");
     }//GEN-LAST:event_btnXoaThongTinCu2ActionPerformed
 
     private void btnLuu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuu2ActionPerformed
-       
-
+        nhanVienController = new NhanVienController();
+        if(!checkEmpty()){
+            String inputUserName = txtNhapTaiKhoan.getText();
+            String fullName = txtHoVaTen.getText();
+            String password = txtMatKhau.getText();
+            String address = txtNoiO.getText();
+            String userName = txtTaiKhoan.getText();
+            String email = txtEmail.getText();
+            String tempChucVu = (String) cbChucVu.getSelectedItem();
+            String idChucVu = nhanVienController.getIDChucVu(tempChucVu);
+            userAccount = new UserAccount(idChucVu, userName, password, fullName, address, email);
+            nhanVienController.update(userAccount, inputUserName);
+            txtHoVaTen.setText("");
+            txtMatKhau.setText("");
+            txtNoiO.setText("");
+            txtTaiKhoan.setText("");
+            txtEmail.setText("");
+            txtNhapTaiKhoan.setText("");
+            cbChucVu.setSelectedItem("----");
+            JOptionPane.showMessageDialog(this, "Sửa thành công", "Success", JOptionPane.INFORMATION_MESSAGE);           
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Không được để trống", "Error", JOptionPane.ERROR_MESSAGE);           
+        }
+        
+        // UPDATE UserAccount SET idChucVu = ?, userName = ?,passWord = ?, fullName = ?, address = ?, email = ? WHERE userName = ?
     }//GEN-LAST:event_btnLuu2ActionPerformed
 
-    private void btnCancel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel2ActionPerformed
+    public Boolean checkEmpty(){
+        Boolean check = false;
+        String inputUserName = txtNhapTaiKhoan.getText();
+        String fullName = txtHoVaTen.getText();
+        String password = txtMatKhau.getText();
+        String address = txtNoiO.getText();
+        String userName = txtTaiKhoan.getText();
+        String email = txtEmail.getText();
+        String tempChucVu = (String) cbChucVu.getSelectedItem();
+        if(inputUserName.isEmpty() || fullName.isEmpty() || password.isEmpty() || address.isEmpty() || userName.isEmpty() ||
+        email.isEmpty() || tempChucVu == "----"){
+            check = true;
+        }
+        return check;
+    }
 
+    private void btnCancel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancel2ActionPerformed
+        FrNhanVien frNhanVien = new FrNhanVien();
+         frNhanVien.setMainController(mainController);
+         frNhanVien.runMain();
+         setVisible(false);
+         dispose();
     }//GEN-LAST:event_btnCancel2ActionPerformed
 
     private void btnTroVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroVeActionPerformed
@@ -322,9 +368,12 @@ public class FrSuaNhanVien extends javax.swing.JFrame {
         txtNoiO.setText("");
         txtTaiKhoan.setText("");
         txtEmail.setText("");
+        lbLoi.setText("*Nhập tài khoản");
+        cbChucVu.setSelectedItem("----");
         String userName = txtNhapTaiKhoan.getText();
         nhanVienController = new NhanVienController();
         if(nhanVienController.find(userName)){
+            lbLoi.setText("*Đã tìm thấy tài khoản");
             frSuaNhanVien = new FrSuaNhanVien();
             frSuaNhanVien.setUserAccount(nhanVienController.getUser());
             String tempUserName = frSuaNhanVien.userAccount.userName;
@@ -334,6 +383,7 @@ public class FrSuaNhanVien extends javax.swing.JFrame {
             String email = frSuaNhanVien.userAccount.email;
             String idChucVu = frSuaNhanVien.userAccount.idChucVu;
             String tenChucVu = nhanVienController.getTenChucVu(idChucVu);
+            lbLoi.setText("");
             txtTaiKhoan.setText(tempUserName);
             txtMatKhau.setText(passWord);
             txtHoVaTen.setText(fullName);
@@ -342,7 +392,7 @@ public class FrSuaNhanVien extends javax.swing.JFrame {
             cbChucVu.setSelectedItem(tenChucVu);
         }
         else{
-            lbLoi.setText("*Không tìm thấy ID");
+            lbLoi.setText("*Không tìm thấy");
         }
         
     }//GEN-LAST:event_btnOkActionPerformed

@@ -11,7 +11,6 @@ import lombok.Setter;
 @Getter
 
 public class CTHD {
-    public String idHoaDon;
     public String idDoUong;
     public Integer soLuong;
 }

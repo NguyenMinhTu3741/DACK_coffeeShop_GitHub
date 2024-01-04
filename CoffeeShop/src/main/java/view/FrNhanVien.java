@@ -32,6 +32,7 @@ public class FrNhanVien extends javax.swing.JFrame {
     public FrMain frMain;
     public UserAccount userAccount;
     public FrSuaNhanVien frSuaNhanVien;
+    public FrXoaNhanVien frXoaNhanVien;
 
     /**
      * Creates new form FrNhanVien
@@ -83,7 +84,7 @@ public class FrNhanVien extends javax.swing.JFrame {
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnNhapLai = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
 
         jTextField2.setText("jTextField1");
 
@@ -192,10 +193,15 @@ public class FrNhanVien extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(102, 153, 255));
-        jButton5.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Xoá");
+        btnXoa.setBackground(new java.awt.Color(102, 153, 255));
+        btnXoa.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        btnXoa.setForeground(new java.awt.Color(255, 255, 255));
+        btnXoa.setText("Xoá");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -236,7 +242,7 @@ public class FrNhanVien extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(btnNhapLai)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton5))
+                                        .addComponent(btnXoa))
                                     .addComponent(cbChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 27, Short.MAX_VALUE))))))
         );
@@ -272,7 +278,7 @@ public class FrNhanVien extends javax.swing.JFrame {
                     .addComponent(btnThem)
                     .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNhapLai, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
         );
 
@@ -366,7 +372,7 @@ public class FrNhanVien extends javax.swing.JFrame {
         nhanVienController = new NhanVienController();
         userAccount = new UserAccount();
         if(checkEmpty()){
-            JOptionPane.showMessageDialog(this, "Không được để trống ", "Invalidation", JOptionPane.ERROR_MESSAGE);  
+            JOptionPane.showMessageDialog(this, "Không được để trống ", "Error", JOptionPane.ERROR_MESSAGE);  
         }
         else{
             userAccount.setUserName(txtTaiKhoan.getText());
@@ -401,6 +407,7 @@ public class FrNhanVien extends javax.swing.JFrame {
         txtMatKhau.setText("");
         txtNoiO.setText("");
         txtTaiKhoan.setText("");
+        cbChucVu.setSelectedItem("----");
     }//GEN-LAST:event_btnNhapLaiActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -410,6 +417,14 @@ public class FrNhanVien extends javax.swing.JFrame {
         setVisible(false);
         dispose();
     }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        frXoaNhanVien = new FrXoaNhanVien();
+        frXoaNhanVien.setMainController(mainController);
+        frXoaNhanVien.runMain();
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -464,8 +479,8 @@ public class FrNhanVien extends javax.swing.JFrame {
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTroVe;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbChucVu;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

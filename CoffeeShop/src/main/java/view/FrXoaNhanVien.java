@@ -3,39 +3,39 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-// improt file
-import controller.DoUongController;
+
+// import file
 import controller.MainController;
-// import other librabry
+import controller.NhanVienController;
+// import other library
 import java.awt.Toolkit;
-import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author nguyentu
  */
-public class FrXoaDoUong extends javax.swing.JFrame {
+public class FrXoaNhanVien extends javax.swing.JFrame {
+
+    
     public MainController mainController;
+    public FrNhanVien frNhanVien;
+    public NhanVienController nhanVienController;
+    public FrXoaNhanVien frXoaNhanVien;
     /**
-     * Creates new form FrXoaDoUong
+     * Creates new form FrXoaNhanVien
      */
-    // main controller
-    public FrXoaDoUong() {
-        setTitle("Xoá đồ uống");
+    // main constructor
+    public FrXoaNhanVien() {
+        setTitle("Xoá thông tin nhân viên");
         initComponents();
     }
-    // setter and getter of main controller
-
-    public MainController getMainController() {
-        return mainController;
-    }
+    // setter
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
-    
-    
-    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,13 +50,13 @@ public class FrXoaDoUong extends javax.swing.JFrame {
         btnTroVe = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtNhapDoUong = new javax.swing.JTextField();
+        txtNhapTaiKhoan = new javax.swing.JTextField();
         btnXoa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("XOÁ THÔNG TIN ĐỒ UỐNG");
+        jLabel1.setText("XOÁ  THÔNG TIN NHÂN VIÊN");
 
         btnTroVe.setBackground(new java.awt.Color(102, 153, 255));
         btnTroVe.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -71,7 +71,7 @@ public class FrXoaDoUong extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thông tin", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel2.setText("Nhập ID đồ uống");
+        jLabel2.setText("Nhập tài khoản");
 
         btnXoa.setBackground(new java.awt.Color(102, 153, 255));
         btnXoa.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -93,7 +93,7 @@ public class FrXoaDoUong extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(txtNhapDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtNhapTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(104, 104, 104)
                         .addComponent(btnXoa)))
@@ -105,7 +105,7 @@ public class FrXoaDoUong extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNhapDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNhapTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(btnXoa))
         );
@@ -114,43 +114,49 @@ public class FrXoaDoUong extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(btnTroVe)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(20, 20, 20))
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTroVe)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1)))
+                .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnTroVe)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTroVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroVeActionPerformed
-        FrDoUong frDoUong = new FrDoUong();
-        frDoUong.setMainController(mainController);
-        frDoUong.runMain();
+        frNhanVien = new FrNhanVien();
+        frNhanVien.setMainController(mainController);
+        frNhanVien.runMain();
         setVisible(false);
         dispose();
     }//GEN-LAST:event_btnTroVeActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-       FrXoaDoUong frXoaDoUong = new FrXoaDoUong();
-        DoUongController doUongController = new DoUongController();
-        String name = txtNhapDoUong.getText();
-        doUongController.xoaDoUong(frXoaDoUong);
-        doUongController.delete(name);
-        txtNhapDoUong.setText("");    
+       String userName = txtNhapTaiKhoan.getText();
+       nhanVienController = new NhanVienController();
+       frXoaNhanVien = new FrXoaNhanVien();
+       nhanVienController.xoaNhanVien(frXoaNhanVien);
+       nhanVienController.delete(userName);
+       txtNhapTaiKhoan.setText("");
+       
     }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
@@ -170,42 +176,43 @@ public class FrXoaDoUong extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrXoaDoUong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrXoaNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrXoaDoUong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrXoaNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrXoaDoUong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrXoaNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrXoaDoUong.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrXoaNhanVien.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrXoaDoUong().setVisible(true);
+                new FrXoaNhanVien().setVisible(true);
             }
         });
     }
-    public void runMain(){      
-        int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-        int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-        int x = (screenWidth - getWidth()) / 2;
-        int y = (screenHeight - getHeight()) / 2;
-        java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-        setVisible(true);
-        setLocation(x, y);
-        setResizable(false);
-        }
+    public void runMain(){    
+    int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+    int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+    int x = (screenWidth - getWidth()) / 2;
+    int y = (screenHeight -getHeight()) / 2;
+    java.awt.EventQueue.invokeLater(new Runnable() {
+    public void run() {
+    setVisible(true);
+    setLocation(x, y);
+    setResizable(false);
+    }
 });
 }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTroVe;
     private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtNhapDoUong;
+    private javax.swing.JTextField txtNhapTaiKhoan;
     // End of variables declaration//GEN-END:variables
 }

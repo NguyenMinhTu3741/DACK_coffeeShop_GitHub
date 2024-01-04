@@ -31,6 +31,7 @@ public class FrMain extends javax.swing.JFrame {
     public FrDoUong frDoUong;
     public FrNhanVien frNhanVien;
     public MainController mainController;   
+    public FrHoaDon frHoaDon;
     /**
      *
      * @param mainContrloller
@@ -68,7 +69,7 @@ public class FrMain extends javax.swing.JFrame {
         lbChucVu = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnDoUong = new javax.swing.JButton();
-        btnViTri = new javax.swing.JButton();
+        btnKho = new javax.swing.JButton();
         btnNhanVien = new javax.swing.JButton();
         btnHoaDon = new javax.swing.JButton();
 
@@ -161,10 +162,10 @@ public class FrMain extends javax.swing.JFrame {
             }
         });
 
-        btnViTri.setBackground(new java.awt.Color(102, 153, 255));
-        btnViTri.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        btnViTri.setForeground(new java.awt.Color(255, 255, 255));
-        btnViTri.setText("VỊ TRÍ");
+        btnKho.setBackground(new java.awt.Color(102, 153, 255));
+        btnKho.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnKho.setForeground(new java.awt.Color(255, 255, 255));
+        btnKho.setText("KHO");
 
         btnNhanVien.setBackground(new java.awt.Color(102, 153, 255));
         btnNhanVien.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -193,7 +194,7 @@ public class FrMain extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnViTri, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnKho, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDoUong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNhanVien, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
@@ -205,7 +206,7 @@ public class FrMain extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnViTri, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnKho, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -253,7 +254,10 @@ public class FrMain extends javax.swing.JFrame {
     }//GEN-LAST:event_pnXinChaoAncestorAdded
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed
-        // TODO add your handling code here:
+        frHoaDon = new FrHoaDon();
+        frHoaDon.setMainController(mainController);
+        frHoaDon.runMain();
+        setVisible(false);
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnDoUongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoUongActionPerformed
@@ -308,8 +312,8 @@ public class FrMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDoUong;
     private javax.swing.JButton btnHoaDon;
+    private javax.swing.JButton btnKho;
     private javax.swing.JButton btnNhanVien;
-    private javax.swing.JButton btnViTri;
     private javax.swing.JButton jButton4;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JPanel jPanel2;
