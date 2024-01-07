@@ -20,6 +20,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -75,7 +77,8 @@ public class FrThemDoUong extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtTenDoUong = new javax.swing.JTextField();
-        spSoLuong = new javax.swing.JSpinner();
+        SpinnerNumberModel spinnerModel = new SpinnerNumberModel(0, 0, 100, 1);
+        spSoLuong = new javax.swing.JSpinner(spinnerModel);
         btnThem2 = new javax.swing.JButton();
         btnXong = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
@@ -124,6 +127,18 @@ public class FrThemDoUong extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setText("Số lượng");
+
+        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) spSoLuong.getEditor();
+        editor.getTextField().setEditable(false);
+        spSoLuong.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                spSoLuongAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         btnThem2.setBackground(new java.awt.Color(102, 153, 255));
         btnThem2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -237,6 +252,7 @@ public class FrThemDoUong extends javax.swing.JFrame {
         FrHoaDon frHoaDon = new FrHoaDon();
         frHoaDon.setMainController(mainController);
         frHoaDon.setHoaDon(hoaDon);
+        hoaDonController.updateThanhTien();
         frHoaDon.runMain();
         setVisible(false);
         dispose();
@@ -270,15 +286,17 @@ public class FrThemDoUong extends javax.swing.JFrame {
         }
         else{
             frHoaDon = new FrHoaDon();
+            hoaDonController = new HoaDonController();
             frHoaDon.setMainController(mainController);
             frHoaDon.setHoaDon(hoaDon);
+            hoaDonController.updateThanhTien();
             frHoaDon.runMain();
             setVisible(false);
             dispose();
         }
         
     }//GEN-LAST:event_btnXongActionPerformed
-
+    // Hiển thị các thông tin đồ uống hiện tại của CTHD lên JTable
     private void tbCTHDAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tbCTHDAncestorAdded
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Đồ uống");
@@ -322,6 +340,10 @@ public class FrThemDoUong extends javax.swing.JFrame {
         setVisible(false);
         dispose();
     }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void spSoLuongAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_spSoLuongAncestorAdded
+  
+    }//GEN-LAST:event_spSoLuongAncestorAdded
     public boolean checkEmpty(){
         Boolean check = false;
         String tenDoUong = txtTenDoUong.getText();

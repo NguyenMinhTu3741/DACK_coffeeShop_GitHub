@@ -5,7 +5,7 @@ use coffeeShop;
 create table Ban(
 	idBan varchar(5) primary key,
     soBan int,
-    tinhTrang boolean
+    tinhTrang boolean DEFAULT false
 );
 
 create table Hoadon(
@@ -13,10 +13,9 @@ create table Hoadon(
     idAccount INT,
     ngayThanhToan datetime,
     idBan varchar(5),
-    thanhTien decimal
+    thanhTien decimal,
+    tinhTrang boolean DEFAULT false
 );
-
-
 create table DoUong(
 	idDoUong INT AUTO_INCREMENT primary key,
     tenDoUong varchar(20), 
@@ -52,11 +51,12 @@ alter table HoaDon add constraint FK_IDBAN
 foreign key(idBan) references Ban(idBan);
 
 alter table HoaDon add constraint FK_IDACCOUNT
-foreign key(idAccount) references UserAccount(idAccount);
+foreign key(idAccount) references UserAccount(idAccount) ON UPDATE CASCADE
+        ON DELETE CASCADE;
 
 -- Add constraint for CTHD
 alter table CTHD add constraint FK_IDHOADON
-foreign key(idHoaDon) references HoaDon(idHoaDon);
+foreign key(idHoaDon) references HoaDon(idHoaDon) ON DELETE CASCADE;
 
 alter table CTHD add constraint FK_IDDOUONG
 foreign key(idDoUong) references DoUong(idDoUong);
@@ -75,19 +75,11 @@ INSERT INTO UserAccount (idChucVu, userName, passWord, fullName, address, email)
 INSERT INTO DoUong(tenDoUong, price) VALUES("Cà phê sữa", "20.000");
 INSERT INTO DoUong(tenDoUong, price) VALUES("Cà phê đá", "15.000");
 INSERT INTO Ban (idBan, soBan, tinhTrang) VALUES
-('B001',001, 1),
+('B001',001, 0),
 ('B002',002, 0),
-('B003',003, 1);
+('B003',003, 0);
 INSERT INTO Hoadon ( idAccount, ngayThanhToan, idBan, thanhTien) VALUES
 ('1', '2023-12-10 10:30:00', 'B001', 150000);
-
-
-SELECT HoaDon.idHoaDon, Ban.soBan, UserAccount.fullName, HoaDon.thanhTien, Ban.tinhTrang, HoaDon.ngayThanhToan
-FROM HoaDon
-JOIN Ban ON Ban.idBan = HoaDon.idBan
-JOIN UserAccount ON UserAccount.idAccount = HoaDon.idAccount
-
-
 -- Test
 -- Truy vấn CTHD để hiển thị 
 SELECT DoUong.tenDoUong, CTHD.soLuong, (CTHD.soLuong * DoUong.price) AS totalPrice
@@ -97,15 +89,27 @@ WHERE CTHD.idHoaDon = "24";
 -- Xoá đồ uống trong CTHD
 DELETE FROM CTHD WHERE idHoaDon = 14 AND idDoUong IN (SELECT idDoUong FROM DoUong WHERE tenDoUong = "Cà phê đá");
 -- Hiển thị trên FrHoaDon
-SELECT HoaDon.idHoaDon, Ban.soBan, UserAccount.fullName, HoaDon.thanhTien, Ban.tinhTrang, HoaDon.ngayThanhToan +
+SELECT HoaDon.idHoaDon, Ban.soBan, UserAccount.fullName, HoaDon.thanhTien , Ban.tinhTrang, HoaDon.ngayThanhToan
 FROM HoaDon
 JOIN Ban ON Ban.idBan = HoaDon.idBan
 JOIN UserAccount ON UserAccount.idAccount = HoaDon.idAccount;
+-- Cập nhập thành tiền để khi từ FrThemHoaDon về FrHoaDon nó hiện lên
+UPDATE HoaDon
+SET thanhTien = (
+    SELECT SUM(DoUong.price * CTHD.soLuong)
+    FROM CTHD
+    JOIN DoUong ON DoUong.idDoUong = CTHD.idDoUong
+    WHERE CTHD.idHoaDon = HoaDon.idHoaDon
+)
+-- Kiểm tra idHoaDon có tồn tại không?
+SELECT idHoaDon
+FROM HoaDon
+WHERE idHoaDon = 3;
 
-
-
-
-
+-- Cập nhập tình trạng bàn và hoá đơn
+UPDATE Ban
+JOIN HoaDon on HoaDon.idBan = Ban.idBan
+SET Ban.tinhTrang = 0 WHERE HoaDon.idHoaDon = ?
 
 -- 
 select * from DoUong;

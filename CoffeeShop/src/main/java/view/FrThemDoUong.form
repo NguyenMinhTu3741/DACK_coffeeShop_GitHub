@@ -216,6 +216,14 @@
         <Component class="javax.swing.JTextField" name="txtTenDoUong">
         </Component>
         <Component class="javax.swing.JSpinner" name="spSoLuong">
+          <Events>
+            <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="spSoLuongAncestorAdded"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JSpinner(spinnerModel)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="SpinnerNumberModel spinnerModel = new SpinnerNumberModel(0, 0, 100, 1);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) spSoLuong.getEditor();&#xa;editor.getTextField().setEditable(false);"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btnThem2">
           <Properties>

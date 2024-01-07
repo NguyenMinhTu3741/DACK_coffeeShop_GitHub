@@ -17,8 +17,4 @@ public class HoaDon {
     public String idBan;
     public Double thanhTien;
     public CTHD cthd;
-    
-    
-    
-
 }

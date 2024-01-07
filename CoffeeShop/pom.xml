@@ -58,6 +58,12 @@
             <version>3.7.4</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>22-ea+16</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
 </project>
