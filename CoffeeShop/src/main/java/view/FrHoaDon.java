@@ -18,11 +18,13 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 // import other library
 import java.awt.Toolkit;
+import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
-
+import java.sql.Date;
 /**
  *
  * @author nguyentu
@@ -42,6 +44,7 @@ public class FrHoaDon extends javax.swing.JFrame {
      */
     // main constructor
     public FrHoaDon() {
+        setTitle("Danh sách hoá đơn ");
         initComponents();
     }
     
@@ -276,9 +279,17 @@ public class FrHoaDon extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Hoá Đơn", "Số bàn", "Nhân viên", "Thành tiền", "Tình trạng", "Ngày thanh toán"
+                "ID Hoá Đơn", "Số bàn", "Nhân viên", "Thành tiền", "Tình trạng", "Ngày thanh toán", "Giờ thanh toán"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, true, true, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbHoaDon.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tbHoaDonAncestorAdded(evt);
@@ -289,6 +300,12 @@ public class FrHoaDon extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(tbHoaDon);
+        if (tbHoaDon.getColumnModel().getColumnCount() > 0) {
+            tbHoaDon.getColumnModel().getColumn(1).setPreferredWidth(50);
+            tbHoaDon.getColumnModel().getColumn(2).setPreferredWidth(50);
+            tbHoaDon.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tbHoaDon.getColumnModel().getColumn(4).setPreferredWidth(50);
+        }
 
         btnTrangChu2.setBackground(new java.awt.Color(102, 153, 255));
         btnTrangChu2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -521,7 +538,7 @@ public class FrHoaDon extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -529,7 +546,7 @@ public class FrHoaDon extends javax.swing.JFrame {
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTrangChu2)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -543,9 +560,6 @@ public class FrHoaDon extends javax.swing.JFrame {
                 .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -553,7 +567,10 @@ public class FrHoaDon extends javax.swing.JFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 6, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3)
+                        .addGap(6, 6, 6))))
         );
 
         pack();
@@ -591,6 +608,7 @@ public class FrHoaDon extends javax.swing.JFrame {
          model.addColumn("Thành tiền");
          model.addColumn("Tình trạng");
          model.addColumn("Ngày thanh toán");
+         model.addColumn("Thời gian thanh toán");
          tbHoaDon.setModel(model);
          TimerTask updateTask = new TimerTask(){
              public void run(){
@@ -610,22 +628,45 @@ public class FrHoaDon extends javax.swing.JFrame {
                          Double thanhTien = rs.getDouble("thanhTien");
                          Boolean tempTinhTrang = rs.getBoolean("tinhTrang");
                          String tinhTrang = null;
-                         Timestamp ngayThanhToan = null;
+                         Timestamp tempNgayThanhToan = null;
+                         int day = 0;
+                         int thang = 0;
+                         int gio = 0;
+                         int phut = 0;
+                         String ngayThanhToan = null;
+                         String thoiGianThanhToan = null;
                          if(tempTinhTrang == true){
-                             tinhTrang = "Đã thanh toán";
-                            ngayThanhToan = rs.getTimestamp("ngayThanhToan");
+                            tinhTrang = "Đã thanh toán";
+                            tempNgayThanhToan = rs.getTimestamp("ngayThanhToan");
+                            Date ngay = new Date(tempNgayThanhToan.getTime());
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(ngay);
+                            // Lấy ngày
+                            day = calendar.get(Calendar.DAY_OF_MONTH);
+                            // Lấy tháng
+                            thang = calendar.get(Calendar.MONTH) + 1;
+                            // Ngày thanh toán
+                            DecimalFormat decimalFormat = new DecimalFormat("00");
+                            ngayThanhToan = decimalFormat.format(day) + "/" + decimalFormat.format(thang);
+                            // lấy giờ và phút
+                            gio = calendar.get(Calendar.HOUR_OF_DAY);
+                            phut = calendar.get(Calendar.MINUTE);
+                            // Giờ thanh toán
+                            DecimalFormat decimalFormat2 = new DecimalFormat("00");
+                            thoiGianThanhToan = decimalFormat2.format(gio) + ":" + decimalFormat.format(phut);
                          }
                          else{
                              tinhTrang = "Chưa thanh toán";
                          }
-                         model.addRow(new Object[]{idHoaDon, soBan, fullName, thanhTien, tinhTrang, ngayThanhToan});
+                         // Ngày thanh toán
+                         model.addRow(new Object[]{idHoaDon, soBan, fullName, thanhTien, tinhTrang, ngayThanhToan, thoiGianThanhToan});
                      }  
                  }catch(SQLException e){
                      e.printStackTrace();
                  }
              }
          };
-         Timer timer = new Timer();
+        Timer timer = new Timer();
         timer.scheduleAtFixedRate(updateTask,0,1000);
     }//GEN-LAST:event_tbHoaDonAncestorAdded
 

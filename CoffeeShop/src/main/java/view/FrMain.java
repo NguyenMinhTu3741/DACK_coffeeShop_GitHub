@@ -32,6 +32,7 @@ public class FrMain extends javax.swing.JFrame {
     public FrNhanVien frNhanVien;
     public MainController mainController;   
     public FrHoaDon frHoaDon;
+    public FrKho frKho;
     /**
      *
      * @param mainContrloller
@@ -166,6 +167,11 @@ public class FrMain extends javax.swing.JFrame {
         btnKho.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnKho.setForeground(new java.awt.Color(255, 255, 255));
         btnKho.setText("KHO");
+        btnKho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKhoActionPerformed(evt);
+            }
+        });
 
         btnNhanVien.setBackground(new java.awt.Color(102, 153, 255));
         btnNhanVien.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -266,6 +272,13 @@ public class FrMain extends javax.swing.JFrame {
         frDoUong.runMain();
         setVisible(false);
     }//GEN-LAST:event_btnDoUongActionPerformed
+
+    private void btnKhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhoActionPerformed
+        frKho = new FrKho();
+        frKho.setMainController(mainController);
+        frKho.runMain();
+        setVisible(false);
+    }//GEN-LAST:event_btnKhoActionPerformed
 
     /**
      * @param args the command line arguments

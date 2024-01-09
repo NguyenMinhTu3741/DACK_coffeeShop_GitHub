@@ -56,7 +56,7 @@ public class FrThemDoUong extends javax.swing.JFrame {
 
     // main constructor
     public FrThemDoUong() {
-        setTitle("Danh sách hoá đơn");
+        setTitle("Chi tiết hoá đơn");
         initComponents();
     }
 
@@ -249,13 +249,18 @@ public class FrThemDoUong extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTrangChu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrangChu2ActionPerformed
-        FrHoaDon frHoaDon = new FrHoaDon();
-        frHoaDon.setMainController(mainController);
-        frHoaDon.setHoaDon(hoaDon);
-        hoaDonController.updateThanhTien();
-        frHoaDon.runMain();
-        setVisible(false);
-        dispose();
+        if(tbCTHD.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đồ uống", "Error", JOptionPane.ERROR_MESSAGE); 
+        }else{
+            FrHoaDon frHoaDon = new FrHoaDon();
+            hoaDonController = new HoaDonController();
+            frHoaDon.setMainController(mainController);
+            frHoaDon.setHoaDon(hoaDon);
+            hoaDonController.updateThanhTien();
+            frHoaDon.runMain();
+            setVisible(false);
+            dispose();
+        }
     }//GEN-LAST:event_btnTrangChu2ActionPerformed
 
     private void btnThem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThem2ActionPerformed

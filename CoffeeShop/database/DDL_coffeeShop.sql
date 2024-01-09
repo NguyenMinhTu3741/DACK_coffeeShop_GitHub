@@ -45,7 +45,11 @@ create table ChucVu(
     luongCoBan decimal
 );
 
-
+create table Kho(
+	idSanPham INT AUTO_INCREMENT primary key,
+    idDoUong INT,
+    soLuong int
+);
 -- Add constraint for HoaDon 
 alter table HoaDon add constraint FK_IDBAN
 foreign key(idBan) references Ban(idBan);
@@ -64,6 +68,10 @@ foreign key(idDoUong) references DoUong(idDoUong);
 -- Add constraint for UserAccount
 alter table UserAccount add constraint FK_IDCHUCVU
 foreign key(idChucVu) references ChucVu(idChucVu);
+
+-- Add constraint for Kho 
+alter table Kho add constraint FK_IDDOUONG_KHO
+foreign key(idDoUong) references DoUong(idDoUong);
 
 -- create to test system
 INSERT INTO ChucVu (idChucVu, tenChucVu, luongCoBan) VALUES
