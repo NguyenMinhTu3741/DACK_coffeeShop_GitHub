@@ -46,7 +46,6 @@ public class KhoController {
                     PreparedStatement statement1 = connection.prepareStatement(query);
                     statement1.setInt(1,kho.idDoUong);
                     statement1.setInt(2, kho.soLuong);
-                    System.out.println("CHECKKKKKKKKKKKKKKKKK");
                     statement1.executeUpdate();
                 }catch(SQLException e){
                     e.printStackTrace();

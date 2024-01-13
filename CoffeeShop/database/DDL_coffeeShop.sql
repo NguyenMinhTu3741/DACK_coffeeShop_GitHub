@@ -46,7 +46,7 @@ create table ChucVu(
 );
 
 create table Kho(
-	idSanPham INT AUTO_INCREMENT primary key,
+	idKho INT AUTO_INCREMENT primary key,
     idDoUong INT,
     soLuong int
 );
@@ -79,7 +79,7 @@ INSERT INTO ChucVu (idChucVu, tenChucVu, luongCoBan) VALUES
 ('CV002', 'Quản lý', 10000000),	
 ('CV003', 'Giám đốc', 20000000);
 INSERT INTO UserAccount (idChucVu, userName, passWord, fullName, address, email) VALUES
-('CV001', '1', '1', 'Test', 'Bình Dương', 'justtest@gmail.com');
+('CV002', 'admin123', 'admin123', 'ADMIN', 'Bình Dương', 'admin@gmail.com');
 INSERT INTO DoUong(tenDoUong, price) VALUES("Cà phê sữa", "20.000");
 INSERT INTO DoUong(tenDoUong, price) VALUES("Cà phê đá", "15.000");
 INSERT INTO Ban (idBan, soBan, tinhTrang) VALUES
@@ -88,42 +88,3 @@ INSERT INTO Ban (idBan, soBan, tinhTrang) VALUES
 ('B003',003, 0);
 INSERT INTO Hoadon ( idAccount, ngayThanhToan, idBan, thanhTien) VALUES
 ('1', '2023-12-10 10:30:00', 'B001', 150000);
--- Test
--- Truy vấn CTHD để hiển thị 
-SELECT DoUong.tenDoUong, CTHD.soLuong, (CTHD.soLuong * DoUong.price) AS totalPrice
-FROM CTHD
-JOIN DoUong ON DoUong.idDoUong = CTHD.idDoUong
-WHERE CTHD.idHoaDon = "24";
--- Xoá đồ uống trong CTHD
-DELETE FROM CTHD WHERE idHoaDon = 14 AND idDoUong IN (SELECT idDoUong FROM DoUong WHERE tenDoUong = "Cà phê đá");
--- Hiển thị trên FrHoaDon
-SELECT HoaDon.idHoaDon, Ban.soBan, UserAccount.fullName, HoaDon.thanhTien , Ban.tinhTrang, HoaDon.ngayThanhToan
-FROM HoaDon
-JOIN Ban ON Ban.idBan = HoaDon.idBan
-JOIN UserAccount ON UserAccount.idAccount = HoaDon.idAccount;
--- Cập nhập thành tiền để khi từ FrThemHoaDon về FrHoaDon nó hiện lên
-UPDATE HoaDon
-SET thanhTien = (
-    SELECT SUM(DoUong.price * CTHD.soLuong)
-    FROM CTHD
-    JOIN DoUong ON DoUong.idDoUong = CTHD.idDoUong
-    WHERE CTHD.idHoaDon = HoaDon.idHoaDon
-)
--- Kiểm tra idHoaDon có tồn tại không?
-SELECT idHoaDon
-FROM HoaDon
-WHERE idHoaDon = 3;
-
--- Cập nhập tình trạng bàn và hoá đơn
-UPDATE Ban
-JOIN HoaDon on HoaDon.idBan = Ban.idBan
-SET Ban.tinhTrang = 0 WHERE HoaDon.idHoaDon = ?
-
--- 
-select * from DoUong;
-select * from HoaDon
-select * from UserAccount
-
-
-
-

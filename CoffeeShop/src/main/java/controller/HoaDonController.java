@@ -226,6 +226,15 @@ public class HoaDonController {
             PreparedStatement statement2 = connection. prepareStatement(updateBan);
             statement2.setInt(1, idHoaDon);
             statement2.executeUpdate();
+            // update số lượng đồ uống trong 
+            String updateKho = "UPDATE Kho k\n" +
+            "JOIN CTHD c ON k.idDoUong = c.idDoUong\n" +
+            "JOIN Hoadon h ON c.idHoaDon = h.idHoaDon\n" +
+            "SET k.soLuong = k.soLuong - c.soLuong\n" +
+            "WHERE h.idHoaDon = ?";
+            PreparedStatement statement3 = connection.prepareStatement(updateKho);
+            statement3.setInt(1,idHoaDon);
+            statement3.executeUpdate();
 
         }catch(SQLException e){
             e.printStackTrace();
